@@ -1,0 +1,44 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# AUS Platform  —  Docker Compose PRODUCTION
+# Extends base compose with production hardening
+# Usage: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# ─────────────────────────────────────────────────────────────────────────────
+
+version: "3.9"
+
+services:
+  backend:
+    build:
+      target: runtime
+    environment:
+      - AUS_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+    command: >
+      /venv/bin/gunicorn main:app
+      --worker-class uvicorn.workers.UvicornWorker
+      --workers 4
+      --bind 0.0.0.0:8002
+      --timeout 120
+      --keep-alive 5
+      --access-logfile -
+      --error-logfile -
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+
+  redis:
+    deploy:
+      resources:
+        limits:
+          memory: 512M

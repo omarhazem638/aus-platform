@@ -1,0 +1,96 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# AUS Platform  —  Docker Compose (Development)
+# Services: backend API + Redis (cache) + Nginx (reverse proxy)
+# ─────────────────────────────────────────────────────────────────────────────
+
+version: "3.9"
+
+services:
+
+  # ── FastAPI Backend ──────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: aus-backend
+    restart: unless-stopped
+    env_file:
+      - _aus_backend/.env
+    environment:
+      - AUS_ENV=development
+      - DATABASE_URL=sqlite+aiosqlite:///./data/aus_data.db
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ./_aus_backend:/app:rw
+      - aus-data:/app/data
+      - aus-logs:/app/logs
+    ports:
+      - "8002:8002"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - aus-network
+    # Development: use uvicorn with hot-reload
+    command: >
+      /venv/bin/uvicorn main:app
+      --host 0.0.0.0
+      --port 8002
+      --reload
+      --log-level info
+
+  # ── Redis (caching + rate limiting) ─────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: aus-redis
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru --requirepass ${REDIS_PASSWORD:-aus_redis_secret}
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aus-network
+
+  # ── Nginx reverse proxy ───────────────────────────────────────────────────────
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: aus-nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./_preview_simulator:/usr/share/nginx/html:ro
+      - aus-logs:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - aus-network
+
+# ── Volumes ──────────────────────────────────────────────────────────────────
+volumes:
+  aus-data:
+    driver: local
+  aus-logs:
+    driver: local
+  redis-data:
+    driver: local
+
+# ── Networks ─────────────────────────────────────────────────────────────────
+networks:
+  aus-network:
+    driver: bridge
