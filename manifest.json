@@ -1,0 +1,42 @@
+{
+  "name": "AUS — AI University Simulator",
+  "short_name": "AUS",
+  "description": "منصة القيادة الذكية — محاكي الجامعة الاصطناعية",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#000510",
+  "theme_color": "#00d4ff",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["education", "business"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Career DNA",
+      "short_name": "DNA",
+      "description": "ابدأ تحليل Career DNA",
+      "url": "/index.html#cdna"
+    },
+    {
+      "name": "المتجر",
+      "short_name": "متجر",
+      "description": "استعرض الكتب والملفات",
+      "url": "/index.html#store"
+    }
+  ]
+}
