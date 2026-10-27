@@ -7055,5 +7055,26 @@
         <i class="fas fa-play"></i>
         <span class="demo-fab-tooltip">عرض تجريبي 🎬</span>
     </button>
-</body>
+</body><script>
+function enterMainApp() {
+    // 1. إخفاء شاشة البداية
+    const splash = document.getElementById('splash-screen') || document.querySelector('.splash-screen');
+    if (splash) {
+        splash.style.display = 'none';
+        splash.classList.remove('active');
+    }
+
+    // 2. إظهار الواجهة الرئيسية
+    const mainApp = document.getElementById('main-app');
+    if (mainApp) {
+        mainApp.style.display = 'block';
+        mainApp.classList.add('active');
+    }
+
+    // 3. التوجيه للقسم الأول
+    if (typeof showSection === 'function') {
+        showSection('crisis-ai');
+    }
+}
+</script>
 </html>
