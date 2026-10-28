@@ -1,0 +1,341 @@
+EADME.md‎
++229
+Lines changed: 229 additions & 0 deletions
+
+
+Original file line number	Diff line number	Diff line change
+@@ -0,0 +1,229 @@
+<p align="center">
+  <h1 align="center">awesome-free-llm-apis</h1>
+  <p align="center"><strong>128+ free LLM APIs from 17 providers</strong> — find, compare & configure free models in seconds.</p>
+</p>
+<p align="center">
+  <a href="https://freellm.net"><strong>🌐 Live at freellm.net</strong></a> —
+  <a href="https://freellm.net/models/">Browse models</a> ·
+  <a href="https://freellm.net/playground/">Playground</a> ·
+  <a href="https://freellm.net/config/">Config generator</a> ·
+  <a href="https://freellm.net/free-llm-api-keys/">API keys</a>
+</p>
+---
+## Why This Exists
+Finding a free LLM API shouldn't mean hunting through a dozen GitHub READMEs, signing up for five different platforms, or guessing which models still have a free tier.
+This repo is a **structured, machine-readable directory** of every free LLM API — rate limits, context windows, one-click config snippets, and direct API key links. Updated daily.
+**The problem we solve:**
+- ❌ You find a "free LLM API" list — it's 2 years old, half the links are dead
+- ❌ You sign up for a provider — it silently requires a credit card, or worse, phone verification
+- ❌ You finally get a key — your config tool (Claude Code, Cursor, Codex) needs a different format
+- ❌ You want to compare two free models — you open 8 browser tabs of separate docs
+**This repo + [freellm.net](https://freellm.net) fixes all of that.**
+---
+## Quick Start — Use Any Free API in 30 Seconds
+All providers below expose an **OpenAI-compatible endpoint** (or, for Gemini, a trivial wrapper). That means any tool that accepts `baseURL` + `apiKey` works.
+### Claude Code (cc)
+```bash
+export ANTHROPIC_BASE_URL="https://api.openai.com/v1"  # or Groq, OpenRouter, NVIDIA NIM
+export ANTHROPIC_AUTH_TOKEN="your-api-key-here"
+# Claude Code now routes through the free backend
+```
+### Cursor
+```
+Settings → Models → Add Model
+  Model name: gpt-oss-120b
+  Base URL: https://api.openai.com/v1
+  API key: your-free-api-key
+```
+### Codex CLI
+```bash
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+export OPENAI_API_KEY="your-api-key-here"
+```
+### OpenAI SDK (Python)
+```python
+from openai import OpenAI
+client = OpenAI(
+    base_url="https://api.openai.com/v1",  # swap to any provider below
+    api_key="YOUR_FREE_API_KEY",
+)
+response = client.chat.completions.create(
+    model="gpt-oss-120b",
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+print(response.choices[0].message.content)
+```
+> See [freellm.net/config/](https://freellm.net/config/) for ready-to-copy configs for Aider, Cline, OpenCode, Continue, Open WebUI, and Gemini CLI.
+---
+## Provider Directory
+### ⚡ Permanent Free Tiers
+These providers offer a **permanently free tier** — no credit card required for most.
+| Provider | Free Models | Credit Card? | Max Context | Modalities | Get API Key |
+|---|---|---|---|---|---|
+| NVIDIA NIM | 17 | Phone verification | 1,048,576 | text, image | [→](https://build.nvidia.com/settings/api-keys) |
+| GitHub Models | 10 | No | 1,000,000 | text | [→](https://github.com/marketplace/models) |
+| Groq | 9 | No | 262,000 | text | [→](https://console.groq.com/keys) |
+| Cloudflare Workers AI | 8 | No | 10,000,000 | text, image | [→](https://dash.cloudflare.com/profile/api-tokens) |
+| OVHcloud AI Endpoints | 7 | Registration | 262,000 | text, image, code | [→](https://endpoints.ai.cloud.ovh.net/) |
+| Mistral AI | 6 | No | 256,000 | text, image, code | [→](https://console.mistral.ai/api-keys) |
+| SiliconFlow | 6 | Registration | 131,072 | text | [→](https://cloud.siliconflow.cn/account/ak) |
+| Cohere | 5 | No | 256,000 | text | [→](https://dashboard.cohere.com/api-keys) |
+| Hugging Face | 5 | No | 131,000 | text | [→](https://huggingface.co/settings/tokens) |
+| LLM7.io | 5 | No | 131,072 | text, code | [→](https://token.llm7.io) |
+| Ollama Cloud | 5 | Registration | 128,000 | text | [→](https://ollama.com/settings/keys) |
+| Cerebras | 4 | No | 131,000 | text | [→](https://cloud.cerebras.ai/) |
+| Kilo Code | 4 | No | 262,000 | text, code | [→](https://kilo.ai) |
+| Z AI (Zhipu) | 3 | No | 200,000 | text | [→](https://open.bigmodel.cn/usercenter/apikeys) |
+| ModelScope | 3 | Registration | 131,072 | text | [→](https://modelscope.cn/my/myaccesstoken) |
+| Google AI Studio | 2 | No | 1,000,000 | text, image, audio | [→](https://aistudio.google.com/app/apikey) |
+### 💰 Renewable Credits
+Providers that periodically renew free credits.
+| Provider | Free Models | Credit Model | Max Context | Modalities | Get API Key |
+|---|---|---|---|---|---|
+| OpenRouter | 29 | Free tier + $10 topup → 1K RPD | 1,048,756 | text, image, code, reasoning, embeddings, audio | [→](https://openrouter.ai/workspaces/default/keys) |
+### 🖥️ Local / Self-Hosted (Unlimited, Private, Free Forever)
+| Tool | Type | Highlights |
+|---|---|---|
+| [Ollama](https://ollama.com) | CLI + API | 100+ models, GPU acceleration, OpenAI-compatible endpoint |
+| [LM Studio](https://lmstudio.ai) | Desktop GUI | Any GGUF model, built-in model browser, offline |
+| [llama.cpp](https://github.com/ggerganov/llama.cpp) | C/C++ engine | Runs any GGUF, minimal dependencies |
+| [GPT4All](https://gpt4all.io) | Desktop app | CPU-only, no GPU required, open source |
+| [Jan.ai](https://jan.ai) | Desktop app | Privacy-focused, 100% offline ChatGPT alternative |
+| [KoboldCpp](https://github.com/LostRuins/koboldcpp) | Single executable | Optimized for creative writing, GGUF |
+---
+## Top Free Models (by Weekly Usage)
+Data from freellm.net, updated daily via API monitoring.
+| Model | Provider | Context | Weekly Usage |
+|---|---|---|---|
+| NVIDIA Nemotron 3 Super | OpenRouter | 262K | 585B tokens |
+| Owl Alpha | OpenRouter | 1M | 375B tokens |
+| Poolside Laguna M.1 | OpenRouter | 131K | 208B tokens |
+| OpenAI gpt-oss-120b | OpenRouter | 131K | 144B tokens |
+| inclusionAI Ring-2.6-1T | OpenRouter | 262K | 86B tokens |
+| Z.ai GLM 4.5 Air | OpenRouter | 131K | 77B tokens |
+| MiniMax M2.5 | OpenRouter | 197K | 57B tokens |
+| NVIDIA Nemotron Nano 30B | OpenRouter | 256K | 41B tokens |
+| OpenAI gpt-oss-20b | OpenRouter | 131K | 32B tokens |
+| Poolside Laguna XS.2 | OpenRouter | 131K | 31B tokens |
+---
+## Repository Structure
+```
+awesome-free-llm-apis/
+├── README.md              ← You are here
+├── code-examples/          ← Ready-to-use config snippets
+│   ├── claude-code.md
+│   ├── cursor.md
+│   └── codex.md
+├── data/
+│   └── models.json         ← Full structured dataset (453 models, updated daily)
+└── LICENSE                 ← MIT
+```
+### Using the Data
+The `data/models.json` file contains structured metadata for every model:
+```json
+{
+  "id": "google-gemini-2.5-flash",
+  "name": "Gemini 2.5 Flash",
+  "provider": "Google",
+  "contextWindow": 1048576,
+  "maxOutput": 65536,
+  "modality": ["text", "image", "audio"],
+  "rateLimit": "2-15 RPM, 1,500 RPD",
+  "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+  "openaiCompatible": false,
+  "noCreditCard": true,
+  "free": true,
+  "bestFor": ["coding", "chat", "vision", "reasoning"],
+  "status": "online"
+}
+```
+Read it in Python:
+```python
+import json
+with open('data/models.json') as f:
+    models = json.load(f)
+free_models = [m for m in models if m['free']]
+no_card = [m for m in free_models if m['noCreditCard']]
+```
+---
+## Contributing
+We welcome contributions!
+- **Add a missing free model** — Open an [issue](https://github.com/open-free-llm-api/open-free-llm-api-/issues) or submit a PR updating `data/models.json`
+- **Fix inaccurate data** — Rate limits change, providers graduate. PRs welcome
+- **Add a config snippet** — Have a working config for a tool we don't cover? Add it to `code-examples/`
+### Criteria for inclusion
+A model belongs in this list if:
+1. The provider explicitly offers a **free tier** (not just a trial credit)
+2. The API is **publicly accessible** (no waitlist, closed beta, or reverse-engineering)
+3. For trial credits: clearly labeled and minimum $1 credit value
+---
+## Links
+- 🌐 **Live site**: [freellm.net](https://freellm.net) — search, compare, playground, config generator
+- 🔑 **API key directory**: [freellm.net/free-llm-api-keys/](https://freellm.net/free-llm-api-keys/)
+- ⚙️ **Config generator**: [freellm.net/config/](https://freellm.net/config/)
+- 🎮 **Playground**: [freellm.net/playground/](https://freellm.net/playground/)
+- 📊 **Compare models**: [freellm.net/compare/](https://freellm.net/compare/)
+## License
+MIT © [open-free-llm-api](https://github.com/open-free-llm-api)
+---
+<p align="center">
+  <sub>Data refreshed daily via automated monitoring. Last updated: 2026-05-10.</sub>
+</p>
+‎code-examples/claude-code.md‎
++72
+Lines changed: 72 additions & 0 deletions
+
+
+Original file line number	Diff line number	Diff line change
+@@ -0,0 +1,72 @@
+# Claude Code (cc) — Free LLM API Config
+Point Claude Code at any free OpenAI-compatible backend in 30 seconds.
+## How It Works
+Claude Code reads `ANTHROPIC_BASE_URL` and `ANTHROPIC_AUTH_TOKEN` from the environment. When you set them to a free provider, cc routes API calls through that backend instead of Anthropic's paid API.
+## Quick Config
+### Groq (fastest inference, no credit card)
+```bash
+export ANTHROPIC_BASE_URL="https://api.groq.com/openai/v1"
+export ANTHROPIC_AUTH_TOKEN="gsk_your_groq_api_key"
+```
+Get your key at [console.groq.com/keys](https://console.groq.com/keys). Recommended model: `llama-3.3-70b-versatile`, `qwen-3-32b`.
+### NVIDIA NIM (no daily token cap)
+```bash
+export ANTHROPIC_BASE_URL="https://integrate.api.nvidia.com/v1"
+export ANTHROPIC_AUTH_TOKEN="nvapi-your_nvidia_key"
+```
+Get your key at [build.nvidia.com](https://build.nvidia.com/settings/api-keys). Recommended model: `meta/llama-3.3-70b-instruct`, `deepseek-ai/deepseek-r1`.
+### OpenRouter (35+ free models, single key)
+```bash
+export ANTHROPIC_BASE_URL="https://openrouter.ai/api/v1"
+export ANTHROPIC_AUTH_TOKEN="sk-or-v1-your_openrouter_key"
+```
+Get your key at [openrouter.ai/keys](https://openrouter.ai/workspaces/default/keys). Recommended model: `openai/gpt-oss-120b:free`, `google/gemini-2.5-flash:free`.
+### Cloudflare Workers AI (10K requests/day free)
+```bash
+export ANTHROPIC_BASE_URL="https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/ai/v1"
+export ANTHROPIC_AUTH_TOKEN="your_cloudflare_api_token"
+```
+### SiliconFlow (best latency for China-based users)
+```bash
+export ANTHROPIC_BASE_URL="https://api.siliconflow.cn/v1"
+export ANTHROPIC_AUTH_TOKEN="sk-your_siliconflow_key"
+```
+Get your key at [cloud.siliconflow.cn](https://cloud.siliconflow.cn/account/ak). Recommended model: `Qwen/Qwen3-Coder-480B-A35B-Instruct`.
+## Persistent Config
+Add to your shell profile (`~/.zshrc` or `~/.bashrc`):
+```bash
+# Free LLM API backend for Claude Code
+export ANTHROPIC_BASE_URL="https://api.groq.com/openai/v1"
+export ANTHROPIC_AUTH_TOKEN="gsk_your_key_here"
+```
+## Caveats
+- Claude Code expects tools/capabilities that not all free backends support. If you hit errors, try a more capable model (Llama 3.3 70B+ or DeepSeek R1).
+- The "Claude" model name shown in cc is cosmetic — you're actually using whichever model you configure.
+- Free tiers have rate limits. Groq: 14,400 RPD. NVIDIA NIM: 40 RPM. OpenRouter: 50 RPD (free tier).
+## More Configs
+Visit [freellm.net/config/claude-code/](https://freellm.net/config/claude-code/) for the interactive config generator with all 128+ free models.
+‎code-examples/codex.md‎
++75
+Lines changed: 75 additions & 0 deletions
+
+
+Original file line number	Diff line number	Diff line change
+@@ -0,0 +1,75 @@
+# Codex CLI — Free LLM API Config
+Use OpenAI's Codex CLI with any free LLM backend — no paid OpenAI tier needed.
+## How It Works
+Codex CLI reads `OPENAI_BASE_URL` and `OPENAI_API_KEY` from environment variables. Point them at a free OpenAI-compatible backend, and Codex works identically — without the paid API bill.
+## Quick Config
+### Groq (fastest, no credit card)
+```bash
+export OPENAI_BASE_URL="https://api.groq.com/openai/v1"
+export OPENAI_API_KEY="gsk_your_groq_api_key"
+```
+Get key: [console.groq.com/keys](https://console.groq.com/keys). Model: `llama-3.3-70b-versatile`.
+### NVIDIA NIM (no daily token cap)
+```bash
+export OPENAI_BASE_URL="https://integrate.api.nvidia.com/v1"
+export OPENAI_API_KEY="nvapi-your_nvidia_key"
+```
+Get key: [build.nvidia.com](https://build.nvidia.com/settings/api-keys). Model: `meta/llama-3.3-70b-instruct`.
+### OpenRouter (one key, 35+ models)
+```bash
+export OPENAI_BASE_URL="https://openrouter.ai/api/v1"
+export OPENAI_API_KEY="sk-or-v1-your_openrouter_key"
+```
+Get key: [openrouter.ai/keys](https://openrouter.ai/workspaces/default/keys). Model: `openai/gpt-oss-120b:free`.
+### Cerebras (gpt-oss with no credit card)
+```bash
+export OPENAI_BASE_URL="https://api.cerebras.ai/v1"
+export OPENAI_API_KEY="your_cerebras_key"
+```
+Get key: [cloud.cerebras.ai](https://cloud.cerebras.ai/). Model: `llama3.1-70b`.
+## Persistent Config
+```bash
+# ~/.zshrc or ~/.bashrc
+export OPENAI_BASE_URL="https://api.groq.com/openai/v1"
+export OPENAI_API_KEY="gsk_your_key_here"
+```
+## Codex-Specific Model Recommendations
+Codex CLI works best with models that support:
+| Capability | Recommended Free Models |
+|---|---|
+| Fast completions | Groq Llama 3.3 70B, Cerebras Llama 3.1 70B |
+| Complex reasoning | DeepSeek R1 (OpenRouter, NVIDIA NIM) |
+| Long context | Gemini 2.5 Flash (Google AI Studio, 1M ctx) |
+| Tool calling | Llama 3.3 70B, Qwen3 Coder 480B |
+| Code generation | Qwen3 Coder, DeepSeek R1, GPT-OSS 120B |
+## Caveats
+- Codex CLI expects OpenAI-compatible tool calling. Not all free models support this — Llama 3.3 70B+ and DeepSeek R1 handle it best.
+- Set a model name in your Codex config that matches the provider's model ID exactly.
+- Rate limits apply to all free tiers.
+## More Configs
+Visit [freellm.net/config/codex/](https://freellm.net/config/codex/) for the interactive config generator.
+‎code-examples/cursor.md‎
++67
+Lines changed: 67 additions & 0 deletions
+
+
+Original file line number	Diff line number	Diff line change
+@@ -0,0 +1,67 @@
+# Cursor — Free LLM API Config
+Configure Cursor with any free OpenAI-compatible API in under a minute.
+## How It Works
+Cursor supports custom API providers via Settings → Models → Add Model. You enter a model name, base URL, and API key — Cursor routes completions through that provider.
+## Step-by-Step
+1. **Get a free API key** from one of the providers below
+2. **Open Cursor Settings** → Models → scroll to "OpenAI API Key" section
+3. **Override the API key** — paste your free provider's key into the "OpenAI API Key" field
+4. **Override the base URL** — paste the provider's base URL into "OpenAI Base URL"
+5. **Add the model name** — under "Custom Models", add the model ID (e.g., `gpt-oss-120b`)
+## Recommended Backends
+### Groq
+```
+Base URL:  https://api.groq.com/openai/v1
+API Key:   gsk_your_groq_api_key
+Models:    llama-3.3-70b-versatile, qwen-3-32b, deepseek-r1-distill-llama-70b
+```
+Get key: [console.groq.com/keys](https://console.groq.com/keys) — no credit card, instant.
+### OpenRouter
+```
+Base URL:  https://openrouter.ai/api/v1
+API Key:   sk-or-v1-your_openrouter_key
+Models:    openai/gpt-oss-120b:free, google/gemini-2.5-flash:free, qwen/qwen3-coder:free
+```
+Get key: [openrouter.ai/keys](https://openrouter.ai/workspaces/default/keys) — 35+ free models.
+### NVIDIA NIM
+```
+Base URL:  https://integrate.api.nvidia.com/v1
+API Key:   nvapi-your_nvidia_key
+Models:    meta/llama-3.3-70b-instruct, deepseek-ai/deepseek-r1
+```
+Get key: [build.nvidia.com](https://build.nvidia.com/settings/api-keys) — phone verification required, no credit card.
+### Cloudflare Workers AI
+```
+Base URL:  https://api.cloudflare.com/client/v4/{account_id}/ai/v1
+API Key:   your_cloudflare_token
+Models:    @cf/meta/llama-3.1-8b-instruct, @cf/deepseek-ai/deepseek-r1-distill-qwen-32b
+```
+Get key: [dash.cloudflare.com](https://dash.cloudflare.com/profile/api-tokens) — 10K req/day free.
+## Caveats
+- Cursor's agent mode (multi-step tool use) works best with models that support tool calling. Stick to Llama 3.3 70B+ or DeepSeek R1 for agent features.
+- Some providers throttle free-tier requests — if you see "rate limit" errors, try a different provider.
+- The model name in Cursor must match the provider's model ID exactly.
+## More Configs
+Visit [freellm.net/config/cursor/](https://freellm.net/config/cursor/) for the interactive config generator.
